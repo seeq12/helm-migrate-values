@@ -1,0 +1,23 @@
+helm-migrate-values
+===================
+
+This product is a fork of helm-migrate-values, originally developed by Octopus
+Deploy and distributed at:
+
+    https://github.com/OctopusDeployLabs/helm-migrate-values
+
+This fork is maintained by Seeq Corporation at:
+
+    https://github.com/seeq12/helm-migrate-values
+
+It was branched from the upstream 1.0.1 release (commit e104c40), and files in
+this repository have been modified since that point. This repository's git
+history retains the full upstream history and is the authoritative record of
+those modifications:
+
+    git log e104c40..HEAD
+
+Octopus Deploy is not affiliated with this fork and does not support it.
+
+This product is licensed under the Apache License, Version 2.0. See the LICENSE
+file for the full license text.

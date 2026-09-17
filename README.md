@@ -1,5 +1,12 @@
 # helm-migrate-values
 
+> **This is a Seeq-maintained fork** of
+> [OctopusDeployLabs/helm-migrate-values](https://github.com/OctopusDeployLabs/helm-migrate-values),
+> originally developed by Octopus Deploy. It has been modified from the upstream
+> project — see [NOTICE](NOTICE) for a summary of the changes and
+> [LICENSE](LICENSE) for terms. Octopus Deploy is not affiliated with this fork
+> and does not support it.
+
 A plugin to migrate user-specified Helm values between chart versions when the schema of `values.yaml` changes. Define migration paths with migration files in the chart repository to ensure seamless upgrades.
 ## Requirements
 
@@ -41,10 +48,10 @@ helm migrate-values [RELEASE] [CHART] [flags]
 
 ## Example
 ```
-helm migrate-values my-kubernetes-agent oci://registry-1.docker.io/octopusdeploy/kubernetes-agent \
-  --version 2.4.0 \
-  -n octopus-agent-demo \
-  --migration-dir kubernetes-agent/value-migrations
+helm migrate-values my-release oci://registry.example.com/charts/my-chart \
+  --version 2.0.0 \
+  -n my-namespace \
+  --migration-dir my-chart/value-migrations \
   --output-file migrated-values.yaml
 ```
 
