@@ -1,9 +1,14 @@
 name: Release
 
+# Releases are cut by hand: a maintainer bumps the version, tags locally and
+# pushes the tag. Nothing here runs on its own. CI only builds the artifacts,
+# so published binaries use the pinned toolchain rather than whatever happens
+# to be on the maintainer's machine. See "Releasing" in README.md.
 on:
   push:
-    branches:
-      - 'main'
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+      - '[0-9]+.[0-9]+.[0-9]+-*'
 
 permissions:
   contents: write
@@ -12,7 +17,6 @@ jobs:
   goreleaser:
     runs-on: ubuntu-latest
 
-    if: ${{ startsWith(github.event.commits[0].message, 'Version Helm Plugin') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -22,17 +26,16 @@ jobs:
       - name: Install YQ
         uses: dcarbone/install-yq-action@v1.1.1
 
-      - name: Get Version
+      - name: Verify plugin.yaml matches the tag
         run: |
-          version=$(yq -r .version plugin.yaml)
-          echo "version=$version" >> $GITHUB_OUTPUT;
-          echo "version=$version";
-        id: version
-
-      - name: Tag Commit
-        run: |
-          git tag -f ${{ steps.version.outputs.version }} $(git rev-parse HEAD)
-          git push origin refs/tags/${{ steps.version.outputs.version }}
+          pluginVersion=$(yq -r .version plugin.yaml)
+          if [[ "$GITHUB_REF_NAME" != "$pluginVersion" ]]; then
+            echo "Tag '$GITHUB_REF_NAME' does not match plugin.yaml version '$pluginVersion'."
+            echo "'helm plugin list' would report the wrong version for this release."
+            echo "Fix plugin.yaml and cut the next version -- tags are immutable."
+            exit 1
+          fi
+          echo "plugin.yaml version '$pluginVersion' matches tag '$GITHUB_REF_NAME'"
 
       - name: Set up Go
         uses: actions/setup-go@v5

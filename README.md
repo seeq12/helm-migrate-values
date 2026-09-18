@@ -24,8 +24,8 @@ $ helm plugin install https://github.com/seeq12/helm-migrate-values.git
 This Helm plugin enables users to migrate values across chart versions, accounting for changes in the values.yaml schema.
 
 > **_NOTE:_** The intended usage of this plugin is that it does not apply any changes to the release on its own. It simply outputs the values to override, which are to be used with `helm upgrade --reset-then-reuse-values`.
-> 
-> See [output values](#optional-output-the-migration-to-a-file) section for an example on how to apply the migration to a release 
+>
+> See [output values](#optional-output-the-migration-to-a-file) section for an example on how to apply the migration to a release
 
 ### Step 1: Define the Migration Files
 Start by defining the migration files within your Helm chart. These files should be placed under the `value-migrations/` directory, relative to your base chart directory. You can customize the migration directory location by using the `--migration-dir` flag if necessary.
@@ -55,7 +55,7 @@ helm migrate-values my-release oci://registry.example.com/charts/my-chart \
   --output-file migrated-values.yaml
 ```
 
-The `--output-file` flag allows you to optionally save the command's output to a file instead of displaying it in stdout, allow you to utilize it in subsequent Helm commands. 
+The `--output-file` flag allows you to optionally save the command's output to a file instead of displaying it in stdout, allow you to utilize it in subsequent Helm commands.
 
 You can then use this file with the helm upgrade command to complete the migration:
 
@@ -67,12 +67,35 @@ helm upgrade [RELEASE] [CHART] -f migrated-values.yaml --reset-then-reuse-values
 
 Please refer to the [Code of Conduct](CODE_OF_CONDUCT.md) before making any contributions.
 
-We adhere to [Semantic Versioning](https://semver.org/) and utilize [@changesets/cli](https://github.com/changesets/changesets) to manage release notes and versioning.
+We adhere to [Semantic Versioning](https://semver.org/). Release notes are
+maintained by hand.
 
-To add a changelog entry for your changes:
+As part of your pull request, add a short entry describing your change to
+[CHANGELOG.md](CHANGELOG.md).
 
-1. Run the following command: `npm run changeset`
-2. Select the appropriate version type for your changes (patch, minor, or major).
-3. Provide a brief description of the changes you've made.
+## Releasing
 
-This will generate a changeset file, which must be included in your pull request.
+Releases are cut by pushing a version tag.
+
+Before tagging, `main` must already contain:
+
+- The release version in `plugin.yaml`. This is the version `helm plugin list`
+  reports, and the release workflow refuses to publish if it does not match the
+  tag.
+- A matching version heading in `CHANGELOG.md`, above the entries it covers.
+
+Both land through an ordinary pull request. Then, from a clean, up-to-date
+`main`:
+
+```
+git tag <version>
+git push origin <version>
+```
+
+Tags carry no `v` prefix, matching the existing tag history. Pushing the tag
+starts the Release workflow, which checks the tag against `plugin.yaml`, builds
+every platform, and publishes the archives and a checksums file.
+
+**Tags are immutable by organisation policy** — they cannot be moved or deleted.
+If a release fails after the tag has been pushed, fix the problem and cut the
+next patch version. Do not attempt to re-tag.

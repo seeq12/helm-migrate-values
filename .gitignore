@@ -15,5 +15,3 @@ go.work.sum
 .idea
 dist/
 
-# Nodejs
-node_modules

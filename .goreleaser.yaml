@@ -37,7 +37,7 @@ archives:
       - goos: windows
         formats: ['zip']
 
-# prefer the changelog by changesets as we are using that
+# Release notes are maintained by hand in CHANGELOG.md.
 changelog:
   disable: true
 
