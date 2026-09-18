@@ -43,3 +43,7 @@ changelog:
 
 release:
   prerelease: auto
+  # Releases are created from the GitHub Releases UI, so the notes written there
+  # are the release notes. keep-existing (also the default) stops this build
+  # replacing them -- it only uploads the archives and checksums.
+  mode: keep-existing

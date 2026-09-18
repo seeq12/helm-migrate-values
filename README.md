@@ -75,27 +75,31 @@ As part of your pull request, add a short entry describing your change to
 
 ## Releasing
 
-Releases are cut by pushing a version tag.
+Releases are cut from the GitHub Releases UI.
 
-Before tagging, `main` must already contain:
+Before starting, `main` must already contain:
 
 - The release version in `plugin.yaml`. This is the version `helm plugin list`
   reports, and the release workflow refuses to publish if it does not match the
   tag.
 - A matching version heading in `CHANGELOG.md`, above the entries it covers.
 
-Both land through an ordinary pull request. Then, from a clean, up-to-date
-`main`:
+Both land through an ordinary pull request. Then:
 
-```
-git tag <version>
-git push origin <version>
-```
+1. Go to **Releases -> Draft a new release**.
+2. In the tag field, enter the new version and choose to create it on publish.
+   Tags carry no `v` prefix, matching the existing tag history.
+3. Write the release notes in the body. Copying the relevant `CHANGELOG.md`
+   section is usually right -- this text is owned by the release, and the build
+   will not overwrite it.
+4. **Publish** the release. A draft does not create the tag, so nothing is built
+   until you publish.
 
-Tags carry no `v` prefix, matching the existing tag history. Pushing the tag
-starts the Release workflow, which checks the tag against `plugin.yaml`, builds
-every platform, and publishes the archives and a checksums file.
+Publishing creates the tag, which starts the Release workflow. It checks the tag
+against `plugin.yaml`, builds every platform, and uploads the archives and a
+checksums file onto the release you just published. The release is live without
+assets for the couple of minutes the build takes.
 
-**Tags are immutable by organisation policy** — they cannot be moved or deleted.
-If a release fails after the tag has been pushed, fix the problem and cut the
-next patch version. Do not attempt to re-tag.
+**Tags are immutable by organisation policy** -- they cannot be moved or deleted.
+If the build fails after you have published, fix the problem and cut the next
+patch version. The release can be deleted, but the tag cannot be reused.
