@@ -37,7 +37,8 @@ archives:
       - goos: windows
         formats: ['zip']
 
-# Release notes are maintained by hand in CHANGELOG.md.
+# Release notes are written on the GitHub release itself, not generated from
+# commit messages.
 changelog:
   disable: true
 

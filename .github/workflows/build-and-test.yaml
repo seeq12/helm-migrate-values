@@ -4,6 +4,11 @@ run-name: "Build and test"
 on:
   workflow_dispatch:
   push:
+    # Branch pushes only. A tag points at a commit that has already been built
+    # and tested on its branch, and a tag push competes for runners with the
+    # release build happening at the same moment.
+    branches:
+      - '**'
     paths:
       - '**.go'
       - 'go.mod'

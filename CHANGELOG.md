@@ -1,5 +1,7 @@
 # helm-migrate-values
 
+> Versions past 1.1.0 changelog notes are recorded through github UI
+
 ## 1.1.0
 
 First Seeq release. No functional change to the migration logic.

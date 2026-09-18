@@ -67,31 +67,26 @@ helm upgrade [RELEASE] [CHART] -f migrated-values.yaml --reset-then-reuse-values
 
 Please refer to the [Code of Conduct](CODE_OF_CONDUCT.md) before making any contributions.
 
-We adhere to [Semantic Versioning](https://semver.org/). Release notes are
-maintained by hand.
+We adhere to [Semantic Versioning](https://semver.org/).
 
-As part of your pull request, add a short entry describing your change to
-[CHANGELOG.md](CHANGELOG.md).
+Describe your change in the pull request itself. Release notes are written on the
+GitHub release when one is cut, so there is no changelog file to update.
+[CHANGELOG.md](CHANGELOG.md) is kept only as the record of releases up to 1.1.0.
 
 ## Releasing
 
 Releases are cut from the GitHub Releases UI.
 
-Before starting, `main` must already contain:
-
-- The release version in `plugin.yaml`. This is the version `helm plugin list`
-  reports, and the release workflow refuses to publish if it does not match the
-  tag.
-- A matching version heading in `CHANGELOG.md`, above the entries it covers.
-
-Both land through an ordinary pull request. Then:
+Before starting, `main` must already contain the release version in
+`plugin.yaml`. This is the version `helm plugin list` reports, and the release
+workflow refuses to publish if it does not match the tag. It lands through an
+ordinary pull request. Then:
 
 1. Go to **Releases -> Draft a new release**.
 2. In the tag field, enter the new version and choose to create it on publish.
    Tags carry no `v` prefix, matching the existing tag history.
-3. Write the release notes in the body. Copying the relevant `CHANGELOG.md`
-   section is usually right -- this text is owned by the release, and the build
-   will not overwrite it.
+3. Write the release notes in the body. These are the changelog for this
+   version -- the build will not overwrite them, and nothing else records them.
 4. **Publish** the release. A draft does not create the tag, so nothing is built
    until you publish.
 
