@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/octopusdeploylabs/helm-migrate-values/internal"
-	"github.com/octopusdeploylabs/helm-migrate-values/pkg"
 	"github.com/pkg/errors"
+	"github.com/seeq12/helm-migrate-values/internal"
+	"github.com/seeq12/helm-migrate-values/pkg"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"gopkg.in/yaml.v2"
@@ -116,7 +116,7 @@ func newRunner(actionConfig *action.Configuration, flags *pflag.FlagSet, setting
 
 			if release.Config != nil && log.IsDebug {
 				value, err := yaml.Marshal(release.Config)
-				if err != nil {
+				if err == nil {
 					log.Debug("Release has the following user-supplied values:\n%s", value)
 				}
 			}

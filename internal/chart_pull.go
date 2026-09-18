@@ -1,7 +1,7 @@
-﻿package internal
+package internal
 
 import (
-	"github.com/octopusdeploylabs/helm-migrate-values/pkg"
+	"github.com/seeq12/helm-migrate-values/pkg"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chartutil"
 	"helm.sh/helm/v3/pkg/cli"

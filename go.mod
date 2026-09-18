@@ -1,4 +1,4 @@
-module github.com/octopusdeploylabs/helm-migrate-values
+module github.com/seeq12/helm-migrate-values
 
 go 1.25.5
 
