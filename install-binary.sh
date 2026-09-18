@@ -3,7 +3,7 @@
 # Copied from https://github.com/databus23/helm-diff/blob/master/install-binary.sh
 
 PROJECT_NAME="helm-migrate-values"
-PROJECT_GH="OctopusDeployLabs/$PROJECT_NAME"
+PROJECT_GH="seeq12/$PROJECT_NAME"
 export GREP_COLOR="never"
 
 # Convert HELM_BIN and HELM_PLUGIN_DIR to unix if cygpath is

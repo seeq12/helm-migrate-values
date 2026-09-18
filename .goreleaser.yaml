@@ -11,6 +11,10 @@ builds:
     binary: bin/migrate-values
     env:
       - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.FullCommit}}
     goos:
       - linux
       - windows
@@ -21,14 +25,17 @@ builds:
 
 archives:
   - name_template: '{{ .ProjectName }}-{{ if eq .Os "darwin" }}macos{{ else }}{{ .Os }}{{ end }}-{{ .Arch }}'
+    formats: ['tgz']
     wrap_in_directory: migrate-values
     files:
       - README.md
       - plugin.yaml
       - LICENSE
+      - NOTICE
+      - install-binary.sh
     format_overrides:
       - goos: windows
-        format: zip
+        formats: ['zip']
 
 # prefer the changelog by changesets as we are using that
 changelog:

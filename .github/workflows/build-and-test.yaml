@@ -1,0 +1,43 @@
+name: Build-and-test
+run-name: "Build and test"
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**.go'
+      - 'go.mod'
+      - 'go.sum'
+      # Integration test fixtures: charts and migration definitions the tests
+      # in pkg/ actually read. Changing these changes test behaviour.
+      - 'pkg/test-charts/**'
+      - '.github/workflows/build-and-test.yaml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version-file: 'go.mod'
+
+    - name: Check formatting
+      run: |
+        unformatted=$(gofmt -l .)
+        if [ -n "$unformatted" ]; then
+          echo "The following files are not gofmt-clean:"
+          echo "$unformatted"
+          exit 1
+        fi
+
+    - name: Build
+      run: go build -v ./...
+
+    - name: Vet
+      run: go vet ./...
+
+    - name: Test
+      run: go test -race -v ./...

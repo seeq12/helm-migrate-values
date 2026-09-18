@@ -16,7 +16,7 @@ A plugin to migrate user-specified Helm values between chart versions when the s
 ## Install
 
 ```
-$ helm plugin install https://github.com/OctopusDeploy/helm-migrate-values.git
+$ helm plugin install https://github.com/seeq12/helm-migrate-values.git
 ```
 
 ## Usage

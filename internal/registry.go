@@ -1,4 +1,4 @@
-﻿package internal
+package internal
 
 import (
 	"helm.sh/helm/v3/pkg/registry"

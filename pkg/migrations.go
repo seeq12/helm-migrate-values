@@ -28,16 +28,6 @@ func NewFileSystemMigrationProvider(dir string) (*FileSystemMigrationProvider, e
 	}, nil
 }
 
-type FileSystemMigrationMeta struct {
-	ToVersion int
-	Path      string
-}
-
-type Migration struct {
-	ToVersion int
-	Data      map[string]interface{}
-}
-
 func loadMigrationMetadata(dir string) (map[int]string, error) {
 	migrationFiles, err := os.ReadDir(dir)
 	if err != nil {

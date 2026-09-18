@@ -8,6 +8,6 @@
   "devDependencies": {
     "@changesets/cli": "^2.29.8"
   },
-  "author": "Octopus Deploy",
+  "author": "Seeq Corporation",
   "license": "Apache-2.0"
 }

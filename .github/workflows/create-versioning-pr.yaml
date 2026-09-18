@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - 'main'
+    paths:
+      - '.changeset/**'
 
 jobs:
   version:
@@ -50,8 +52,8 @@ jobs:
         run: |
           packageVersion=$(yq -r .version package.json)
           pluginVersion=$(yq -r .version plugin.yaml)
-          
-          if [[ "packageVersion" != "pluginVersion" ]]; then
+
+          if [[ "$packageVersion" != "$pluginVersion" ]]; then
             echo "pluginChanged=true" >> $GITHUB_OUTPUT
           fi
         if: steps.changesets.outputs.hasChangesets == 'true'
