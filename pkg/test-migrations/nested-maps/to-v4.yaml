@@ -1,0 +1,4 @@
+{{- $network := .network | default dict }}
+{{- $_ := set $network "poolSize" 4 }}
+{{- $_ := set . "network" $network }}
+{{ . | toYaml }}

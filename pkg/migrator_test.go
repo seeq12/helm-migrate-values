@@ -114,41 +114,41 @@ var migrationData = map[int]map[string]interface{}{
 var nilConfig = map[string]interface{}(nil)
 
 var version1Config = map[string]interface{}{
-	"agent": map[interface{}]interface{}{
+	"agent": map[string]interface{}{
 		"targetEnvironment": "test",
 	},
 }
 
 // Has no migration (realistically not going to happen in practice)
 var version2Config = map[string]interface{}{
-	"agent": map[interface{}]interface{}{
+	"agent": map[string]interface{}{
 		"targetEnvironment": "test",
 	},
 }
 
 var version3Config = map[string]interface{}{
-	"agent": map[interface{}]interface{}{
+	"agent": map[string]interface{}{
 		"targetEnvironments": []interface{}{"test"},
 	},
 }
 
 var version4Config = map[string]interface{}{
-	"agent": map[interface{}]interface{}{
-		"target": map[interface{}]interface{}{
+	"agent": map[string]interface{}{
+		"target": map[string]interface{}{
 			"environments": []interface{}{"test"},
 		},
 	},
 }
 
 var version3Migration = map[string]interface{}{
-	"agent": map[interface{}]interface{}{
+	"agent": map[string]interface{}{
 		"targetEnvironments": []string{"{{ .agent.targetEnvironment }}"},
 	},
 }
 
 var version4Migration = map[string]interface{}{
-	"agent": map[interface{}]interface{}{
-		"target": map[interface{}]interface{}{
+	"agent": map[string]interface{}{
+		"target": map[string]interface{}{
 			"environments": []string{"{{ .agent.targetEnvironments | join \",\" }}"},
 		},
 	},

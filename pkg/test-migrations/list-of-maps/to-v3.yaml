@@ -1,0 +1,4 @@
+{{- range .sidecars }}
+{{- $_ := set . "enabled" true }}
+{{- end }}
+{{ toYaml . }}

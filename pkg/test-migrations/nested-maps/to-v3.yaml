@@ -1,0 +1,3 @@
+{{- $rest := omit . "mode" -}}
+{{ toYaml $rest }}
+mode: "standalone"

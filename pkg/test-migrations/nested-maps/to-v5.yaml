@@ -1,0 +1,6 @@
+{{- if not .server }}{{- $_ := set . "server" dict }}{{- end }}
+{{- if not .server.cache }}{{- $_ := set .server "cache" dict }}{{- end }}
+{{- $_ := set .server.cache "enabled" true }}
+{{- $_ := set .server.cache "shards" 2 }}
+{{- $_ := set .server "extraEnv" list }}
+{{ . | toYaml }}

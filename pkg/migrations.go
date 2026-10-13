@@ -2,12 +2,12 @@ package pkg
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v2"
 	"iter"
 	"maps"
 	"os"
 	"path/filepath"
 	"regexp"
+	"sigs.k8s.io/yaml"
 	"strconv"
 )
 
