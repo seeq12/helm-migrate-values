@@ -47,9 +47,9 @@ func migrateCharts(t *testing.T, chartV1Path, chartV2Path string) {
 	}
 
 	expected := map[string]interface{}{
-		"project": map[interface{}]interface{}{
-			"deploymentTarget": map[interface{}]interface{}{
-				"initial": map[interface{}]interface{}{
+		"project": map[string]interface{}{
+			"deploymentTarget": map[string]interface{}{
+				"initial": map[string]interface{}{
 					"environments": []interface{}{"Development", "Test", "Prod"},
 				},
 			},

@@ -7,7 +7,6 @@ import (
 	"github.com/seeq12/helm-migrate-values/pkg"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
-	"gopkg.in/yaml.v2"
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/cli"
 	"io"
@@ -115,7 +114,7 @@ func newRunner(actionConfig *action.Configuration, flags *pflag.FlagSet, setting
 			log.Debug("Release is currently on chart version: %s", release.Chart.Metadata.Version)
 
 			if release.Config != nil && log.IsDebug {
-				value, err := yaml.Marshal(release.Config)
+				value, err := pkg.MarshalValues(release.Config)
 				if err == nil {
 					log.Debug("Release has the following user-supplied values:\n%s", value)
 				}
@@ -141,7 +140,7 @@ func newRunner(actionConfig *action.Configuration, flags *pflag.FlagSet, setting
 
 			if len(migratedConfig) > 0 {
 
-				migratedValues, err := yaml.Marshal(migratedConfig)
+				migratedValues, err := pkg.MarshalValues(migratedConfig)
 				if err != nil {
 					return fmt.Errorf("migrated values are in an invalid format: %w", err)
 				}

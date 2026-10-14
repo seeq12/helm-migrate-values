@@ -1,0 +1,2 @@
+{{- $_ := set . "replicasKind" (kindOf .replicas) }}
+{{ toYaml . }}

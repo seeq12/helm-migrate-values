@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/Masterminds/sprig/v3"
-	"gopkg.in/yaml.v2"
+	"helm.sh/helm/v3/pkg/chartutil"
 	"os"
+	"sigs.k8s.io/yaml"
 	"slices"
 	"strings"
 	"text/template"
@@ -57,9 +58,9 @@ func Migrate(currentConfig map[string]interface{}, vFrom int, vTo *int, mp Migra
 		return nil, nil
 	}
 
-	migratedConfig := make(map[string]interface{})
-	for key, value := range currentConfig {
-		migratedConfig[key] = value
+	migratedConfig, err := toValues(currentConfig)
+	if err != nil {
+		return nil, fmt.Errorf("error copying user-supplied values: %w", err)
 	}
 
 	for _, version := range versions {
@@ -97,13 +98,29 @@ func apply(valuesData map[string]interface{}, mTemplate string) (map[string]inte
 		return nil, fmt.Errorf("error executing migration template: %w", err)
 	}
 
-	var migratedConfig map[string]interface{}
-	err = yaml.Unmarshal(renderedMigrationBuf.Bytes(), &migratedConfig)
+	migratedConfig, err := chartutil.ReadValues(renderedMigrationBuf.Bytes())
 	if err != nil {
 		return nil, fmt.Errorf("error parsing migrated yaml values %w", err)
 	}
 
 	return migratedConfig, nil
+}
+
+// toValues deep-copies values through the same decoder apply uses, so the first migration sees the same types
+// as every later one, and a migration can't modify the caller's values.
+func toValues(values map[string]interface{}) (map[string]interface{}, error) {
+	data, err := MarshalValues(values)
+	if err != nil {
+		return nil, err
+	}
+
+	return chartutil.ReadValues(data)
+}
+
+// MarshalValues writes values as YAML the way Helm does, so numbers decoded as float64 are written as
+// integers where they are whole (1000000, not 1e+06).
+func MarshalValues(values map[string]interface{}) ([]byte, error) {
+	return yaml.Marshal(values)
 }
 
 // Modified from https://github.com/helm/helm/blob/2feac15cc3252c97c997be2ced1ab8afe314b429/pkg/engine/funcs.go#L43
