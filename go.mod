@@ -1,6 +1,6 @@
 module github.com/seeq12/helm-migrate-values
 
-go 1.26.7
+go 1.26.9
 
 require (
 	github.com/Masterminds/sprig/v3 v3.3.0
